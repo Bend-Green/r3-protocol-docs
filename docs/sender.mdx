@@ -1,0 +1,70 @@
+---
+title: 'Sender'
+date: '2024-04-16'
+tags: ['services','sender']
+---
+
+# R3 Sender
+
+The Sender is a protocol client typically operated by a merchant or other forwarder of receipt data. Their responsibilities are:
+1. the collection, canonicalization, hashing, and encryption of receipt data
+2. the registration of transaction hash/key pairs with the Registry
+3. the sending of encrypted receipt data to authorized addresses returned by the Registry
+
+## Handling Receipt Data
+
+Lorem ipsum
+
+## Encryption
+
+Lorem ipsum
+
+Here's an example encryption implementation in Rust
+
+```rs
+
+use aes_siv::{
+    aead::{Aead, KeyInit, OsRng},
+    Aes256SivAead, Nonce // Or `Aes128SivAead`
+};
+use data_access::model::client::{hash::HashAndEncrypted, receipt::Data};
+use json_canon::to_string;
+use serde_json::json;
+use std::hash::{DefaultHasher, Hash, Hasher};
+use rand::Rng;
+
+fn generate_nonce() -> [u8; 16] {
+    let mut rng = rand::thread_rng();
+    let mut nonce = [0u8; 16];
+    rng.fill(&mut nonce);
+    nonce
+}
+
+fn calculate_hash<T: Hash>(t: &T) -> u64 {
+    let mut s = DefaultHasher::new();
+    t.hash(&mut s);
+    s.finish()
+}
+
+pub fn encrypt_and_hash(data: Data) -> HashAndEncrypted {
+    let serde_json = json!(data);
+
+    let canonicalized = match to_string(&serde_json) {
+        Ok(canonicalized) => canonicalized,
+        Err(e) => panic!("Error canonicalizing JSON: {}", e),
+    };
+
+    let hash = calculate_hash(&canonicalized);
+
+    let bytekey = Aes256SivAead::generate_key(&mut OsRng);
+    let cipher = Aes256SivAead::new(&bytekey);
+    let nonce_bytes = generate_nonce();
+    let nonce = Nonce::from_slice(&nonce_bytes); // normally, this would be unique to each receiver and included in the message
+    let encrypted = match cipher.encrypt(nonce, canonicalized.as_bytes()) {
+        Ok(ciphertext) => ciphertext,
+        Err(e) => panic!("Error encrypting data: {}", e),
+    };
+    HashAndEncrypted { key: bytekey.to_vec(), hash, encrypted, nonce: nonce_bytes.to_vec() }
+}
+
+```
