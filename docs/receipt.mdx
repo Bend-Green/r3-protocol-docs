@@ -36,7 +36,7 @@ Time at which the auth was created. Measured in seconds since the Unix epoch.
 Unique identifier for the merchant.
 
 **actions** `nullable array`  
-See ‘actions’ below. 
+See ‘actions’ below.
 
 **details** `array`  
 The line items in the purchase.
@@ -55,43 +55,44 @@ A generic line item is used when the goods and services being purchased do not m
 }
 ```
 
-_quantity_ (integer)
-The quantity of the item.
-
-_description_ (string)
-The description of the item. The maximum length of this field is 128 characters.
-
-_unit_cost_ (integer)
-The unit cost of the item.
-
-_tax_ (nullable integer)
-The total for this line item.
-
-_total_ (integer)
-The total for this line item.
-
-
-| Field      | Type | Description |
-| ----------- | ----------- | ----------- |
-|**quantity**      | integer       | The quantity of the item. |
-| **description**   | string        | The description of the item. The maximum length of this field is 128 characters. |
+| Field           | Type      | Description                                                                      |
+| --------------- | --------- | -------------------------------------------------------------------------------- |
+| **quantity**    | `integer` | The quantity of the item.                                                        |
+| **description** | `string`  | The description of the item. The maximum length of this field is 128 characters. |
+| **unit_cost**   | `integer` | The unit cost of the item.                                                       |
+| **tax**         | `integer` | The tax for this line item.                                                      |
+| **total**       | `integer` | The total for this line item.                                                    |
 
 ## Special types of line items
 
 ### Flight
+
 ### Car Rental
+
 ### Rail
+
 ### Lodging
+
 ### Ground Transport / Rideshare
+
 ### Ecommerce
+
 ### Restaurant - full service
+
 ### Restaurant - quick service / coffee shops
+
 ### Food delivery
+
 ### Subscription / SaaS / Telecom
+
 ### Ads
+
 ### Energy / Utilities / Fuel
+
 ### Hosting
+
 ### Parking
+
 ### Tax
 
 ## Primitives
@@ -99,4 +100,3 @@ The total for this line item.
 ### Address
 
 ## Actions
-
