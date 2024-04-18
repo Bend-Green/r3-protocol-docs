@@ -9,7 +9,7 @@ The receipt object defines a transaction. A receipt consists of both the ‘head
 
 ## Rceipt Header
 
-A receipt header object looks like this:
+Here's an example receipt header:
 
 ```json
 {
@@ -23,23 +23,14 @@ A receipt header object looks like this:
 }
 ```
 
-**authorization** `string`  
-Unique identifier for the transaction.
-
-**amount** `integer`  
-The transaction amount, which will be reflected in the card currency.
-
-**created** `timestamp`  
-Time at which the auth was created. Measured in seconds since the Unix epoch.
-
-**merchant_id** `string`  
-Unique identifier for the merchant.
-
-**actions** `nullable array`  
-See ‘actions’ below.
-
-**details** `array`  
-The line items in the purchase.
+| Field             | Type             | Description                                                                   |
+| ----------------- | ---------------- | ----------------------------------------------------------------------------- |
+| **authorization** | `string`         | Unique identifier for the transaction.                                        |
+| **amount**        | `integer`        | The transaction amount, which will be reflected in the card currency.         |
+| **created**       | `timestamp`      | Time at which the auth was created. Measured in seconds since the Unix epoch. |
+| **merchant_id**   | `string`         | Unique identifier for the merchant.                                           |
+| **actions**       | `nullable array` | See 'actions' below.                                                          |
+| **details**       | `array`          | The line items in the purchase.                                               |
 
 ## Generic line-items
 
