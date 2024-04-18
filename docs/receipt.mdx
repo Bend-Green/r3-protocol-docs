@@ -11,7 +11,7 @@ The receipt object defines a transaction. A receipt consists of both the ‘head
 
 A receipt header object looks like this:
 
-```
+```json
 {
   "authorization": "auth_1MzFN1K8F4fqH0lBmFq8CjbU",
   "amount": 12345,
@@ -26,26 +26,26 @@ A receipt header object looks like this:
 **authorization** `string`  
 Unique identifier for the transaction.
 
-_amount_ (integer)  
+**amount** `integer`  
 The transaction amount, which will be reflected in the card currency.
 
-_created_ (timestamp)  
+**created** `timestamp`  
 Time at which the auth was created. Measured in seconds since the Unix epoch.
 
-_merchant_id_ (string)  
+**merchant_id** `string`  
 Unique identifier for the merchant.
 
-_actions_ (nullable array)  
+**actions** `nullable array`  
 See ‘actions’ below. 
 
-_details_ (array)  
+**details** `array`  
 The line items in the purchase.
 
 ## Generic line-items
 
 A generic line item is used when the goods and services being purchased do not match one of the special types below.
 
-```
+```json
 {
   "quantity": 1,
   "Description": "Kleenex Ultra Soft Facial Tissues, 3 Flat Boxes, 120 Tissues per Box",
