@@ -1,17 +1,97 @@
 ---
-title: "Receipt"
+title: "Receipt Object"
 date: "2024-04-17"
 ---
 
-The receipt object defines a transaction. A receipt consists of the ‘header’ information, and the ‘line item’ information. A valid receipt is where the header amount is the sum of the totals of all the line-items.
+# Receipt Object
+
+The receipt object defines a transaction. A receipt consists of both the ‘header’ information, as well as the ‘line item’ details. For example: a receipt from a coffee shop would include the header information — the merchant, the date, the total amount of the purchase, etc. — and the line items — 2 x drip coffees, 1 x donut, etc. For a receipt to be valid, the sum of all the line items must exactly add up to the header total.
+
+## Rceipt Header
+
+A receipt header object looks like this:
+
+```
+{
+  "authorization": "auth_1MzFN1K8F4fqH0lBmFq8CjbU",
+  "amount": 12345,
+  "created": 1682065867,
+  "merchant_id": "merchant_1MzFN1K8F4fqH0lBmFq8CjbU",
+  "details": [
+    ...
+  ]
+}
+```
+
+_authorization_ (string)
+Unique identifier for the transaction.
+
+_amount_ (integer)
+The transaction amount, which will be reflected in the card currency.
+
+_created_ (timestamp)
+Time at which the auth was created. Measured in seconds since the Unix epoch.
+
+_merchant_id_ (string)
+Unique identifier for the merchant.
+
+_actions_ (nullable array)
+See ‘actions’ below. 
+
+_details_ (array)
+The line items in the purchase.
+
+## Generic line-items
+
+A generic line item is used when the goods and services being purchased do not match one of the special types below.
+
+```
+{
+  "quantity": 1,
+  "Description": "Kleenex Ultra Soft Facial Tissues, 3 Flat Boxes, 120 Tissues per Box",
+  "unit_cost": 1432,
+  "tax": 100,
+  "total": 1532
+}
+```
+
+_quantity_ (integer)
+The quantity of the item.
+
+_description_ (string)
+The description of the item. The maximum length of this field is 128 characters.
+
+_unit_cost_ (integer)
+The unit cost of the item.
+
+_tax_ (nullable integer)
+The total for this line item.
+
+_total_ (integer)
+The total for this line item.
+
 
 ## Special types of line items
 
 ### Flight
+### Car Rental
+### Rail
+### Lodging
+### Ground Transport / Rideshare
+### Ecommerce
+### Restaurant - full service
+### Restaurant - quick service / coffee shops
+### Food delivery
+### Subscription / SaaS / Telecom
+### Ads
+### Energy / Utilities / Fuel
+### Hosting
+### Parking
+### Tax
 
-E.g. Delta, British Airways
+## Primitives
 
-| Syntax         | Description |
-| -------------- | ----------- |
-| passenger_name | Title       |
-| ticket_number  | Text        |
+### Address
+
+## Actions
+
