@@ -23,22 +23,22 @@ A receipt header object looks like this:
 }
 ```
 
-_authorization_ (string) 
+_authorization_ (string)  
 Unique identifier for the transaction.
 
-_amount_ (integer) 
+_amount_ (integer)  
 The transaction amount, which will be reflected in the card currency.
 
-_created_ (timestamp) 
+_created_ (timestamp)  
 Time at which the auth was created. Measured in seconds since the Unix epoch.
 
-_merchant_id_ (string) 
+_merchant_id_ (string)  
 Unique identifier for the merchant.
 
-_actions_ (nullable array) 
+_actions_ (nullable array)  
 See ‘actions’ below. 
 
-_details_ (array) 
+_details_ (array)  
 The line items in the purchase.
 
 ## Generic line-items
