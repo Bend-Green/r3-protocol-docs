@@ -23,14 +23,14 @@ Here's an example receipt header:
 }
 ```
 
-| Field           | Description                                                                               |
-| --------------- | ----------------------------------------------------------------------------------------- |
-| `authorization` | _string_ Unique identifier for the transaction.                                           |
-| `amount`        | _integer_ The transaction amount, which will be reflected in the card currency.           |
-| `created`       | _timestamp_ Time at which the auth was created. Measured in seconds since the Unix epoch. |
-| `merchant_id`   | _string_ Unique identifier for the merchant.                                              |
-| `actions`       | _nullable array_ See 'actions' below.                                                     |
-| `details`       | _array_ The line items in the purchase.                                                   |
+| Field           | Description                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------ |
+| `authorization` | Unique identifier for the transaction. _(string)_                                          |
+| `amount`        | The transaction amount, which will be reflected in the card currency _(integer)_           |
+| `created`       | Time at which the auth was created. Measured in seconds since the Unix epoch _(timestamp)_ |
+| `merchant_id`   | Unique identifier for the merchant _(string)_                                              |
+| `actions`       | See 'actions' below. _nullable (array)_                                                    |
+| `details`       | The line items in the purchase _(array)_                                                   |
 
 ## Generic line-items
 
@@ -46,13 +46,13 @@ A generic line item is used when the goods and services being purchased do not m
 }
 ```
 
-| Field         | Description                                                                               |
-| ------------- | ----------------------------------------------------------------------------------------- |
-| `quantity `   | _integer_ The quantity of the item.                                                       |
-| `description` | _string_ The description of the item. The maximum length of this field is 128 characters. |
-| `unit_cost`   | _integer_ The unit cost of the item.                                                      |
-| `tax`         | _integer_ The tax for this line item.                                                     |
-| `total`       | _integer_ The total for this line item.                                                   |
+| Field         | Description                                                                                 |
+| ------------- | ------------------------------------------------------------------------------------------- |
+| `quantity `   | The quantity of the item. _(integer)_                                                       |
+| `description` | The description of the item. The maximum length of this field is 128 characters. _(string)_ |
+| `unit_cost`   | The unit cost of the item. _(integer)_                                                      |
+| `tax`         | The tax for this line item. _(integer)_                                                     |
+| `total`       | The total for this line item. _(integer)_                                                   |
 
 ## Special types of line items
 
