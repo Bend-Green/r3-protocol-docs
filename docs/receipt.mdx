@@ -29,7 +29,7 @@ Here's an example receipt header:
 | `amount`        | The transaction amount, which will be reflected in the card currency _(integer)_           |
 | `created`       | Time at which the auth was created. Measured in seconds since the Unix epoch _(timestamp)_ |
 | `merchant_id`   | Unique identifier for the merchant _(string)_                                              |
-| `actions`       | See 'actions' below. _nullable (array)_                                                    |
+| `actions`       | See 'actions' below _(nullable array)_                                                     |
 | `details`       | The line items in the purchase _(array)_                                                   |
 
 ## Generic line-items
@@ -48,11 +48,11 @@ A generic line item is used when the goods and services being purchased do not m
 
 | Field         | Description                                                                                 |
 | ------------- | ------------------------------------------------------------------------------------------- |
-| `quantity `   | The quantity of the item. _(integer)_                                                       |
-| `description` | The description of the item. The maximum length of this field is 128 characters. _(string)_ |
-| `unit_cost`   | The unit cost of the item. _(integer)_                                                      |
-| `tax`         | The tax for this line item. _(integer)_                                                     |
-| `total`       | The total for this line item. _(integer)_                                                   |
+| `quantity `   | The quantity of the item _(integer)_                                                        |
+| `description` | The description of the item — the maximum length of this field is 128 characters _(string)_ |
+| `unit_cost`   | The unit cost of the item _(integer)_                                                       |
+| `tax`         | The tax for this line item _(integer)_                                                      |
+| `total`       | The total for this line item _(integer)_                                                    |
 
 ## Special types of line items
 
