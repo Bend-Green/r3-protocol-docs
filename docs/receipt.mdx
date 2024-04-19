@@ -23,14 +23,14 @@ Here's an example receipt header:
 }
 ```
 
-| Field             | Type             | Description                                                                   |
-| ----------------- | ---------------- | ----------------------------------------------------------------------------- |
-| **authorization** | `string`         | Unique identifier for the transaction.                                        |
-| **amount**        | `integer`        | The transaction amount, which will be reflected in the card currency.         |
-| **created**       | `timestamp`      | Time at which the auth was created. Measured in seconds since the Unix epoch. |
-| **merchant_id**   | `string`         | Unique identifier for the merchant.                                           |
-| **actions**       | `nullable array` | See 'actions' below.                                                          |
-| **details**       | `array`          | The line items in the purchase.                                               |
+| Field           | Description                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------- |
+| `authorization` | _string_ Unique identifier for the transaction.                                           |
+| `amount`        | _integer_ The transaction amount, which will be reflected in the card currency.           |
+| `created`       | _timestamp_ Time at which the auth was created. Measured in seconds since the Unix epoch. |
+| `merchant_id`   | _string_ Unique identifier for the merchant.                                              |
+| `actions`       | _nullable array_ See 'actions' below.                                                     |
+| `details`       | _array_ The line items in the purchase.                                                   |
 
 ## Generic line-items
 
