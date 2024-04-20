@@ -1,12 +1,12 @@
 ---
-title: 'Registry'
-date: '2024-04-16'
-tags: ['services','registry']
+title: "Registry"
+date: "2024-04-16"
 ---
 
-# R3 Registry
+# Versa Registry
 
 The Registry is the centralized and trusted service operated by R3P. Its primary responsibilities are
+
 1. the registration of BIN receiver addresses, and providing authorized addresses to senders
 2. the registration of transaction hash/key pairs, and providing keys to authorized receivers
 3. the cataloguing of entity brand details, such that sellers can control the appearance of their receipts
@@ -21,13 +21,11 @@ Lorem ipsum
 
 Here's an example transaction registration JSON payload
 
-<CodeBlock
-    language="shell"
-    showLineNumbers={false}
-    text={`{
+```
+{
   vendor_id: "ntt_1a4bd3bd",
   transaction_hash: 1234555,
   decryption_key: [0x01, 0x02, 0x03, 0x04, 0x05],
   authorization_bin: "55511555",
-}`}
-/>
+}
+```
