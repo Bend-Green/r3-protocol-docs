@@ -1,99 +1,79 @@
 ---
 title: "Receipt Object"
-date: "2024-04-17"
 ---
 
 # Receipt Object
 
-The receipt object defines a transaction. A receipt consists of both the ‘header’ information, as well as the ‘line item’ details. For example: a receipt from a coffee shop would include the header information — the merchant, the date, the total amount of the purchase, etc. — and the line items — 2 x drip coffees, 1 x donut, etc. For a receipt to be valid, the sum of all the line items must exactly add up to the header total.
+Itemized receipts are the core data model of Versa. Receipts contain both the "header" information — the merchant, total amount, and date of the transaction — as well as the line-item details. For example, a receipt from a coffee shop would include the line items '2 x drip coffees,' '1 x donut,' and so on.
 
-## Receipt Header
+Going a layer deeper, receipts are composed of six distinct sections:
 
-Here's an example receipt header:
+1. **Header Info**: E.g. merchant name, merchant logo, transaction date.
+2. **Type Block**: Type-specific objects describing the purchased goods and service. E.g. check-in and check-out information for a hotel stay, origin and destination information for a ticketed flight. Note: this section is only present for special receipt types, and is frquently null. It also can include more than one type-specific object.
+3. **Line Items**: The description, quantity, unit cost, and total for line item.
+4. **Roll-up Block**: The subtotal, taxes, fees, tip, and grand total of the receipt.
+5. **Actions**: Merchant-defined links, pivoting off the purchase. For example: 'Contact Support,' 'Buy Again,' 'manage subscription.'
+6. **Payment Details**: Payment status and metadata associated with the receipt.
 
-```json
-{
-  "authorization": "auth_1MzFN1K8F4fqH0lBmFq8CjbU",
-  "amount": 12345,
-  "created": 1682065867,
-  "merchant_id": "merchant_1MzFN1K8F4fqH0lBmFq8CjbU",
-  "details": [...]
-}
-```
+Below we describe each of these six sections.
 
-| Field           | Description                                                                                |
-| --------------- | ------------------------------------------------------------------------------------------ |
-| `authorization` | Unique identifier for the transaction. _(string)_                                          |
-| `amount`        | The transaction amount, which will be reflected in the card currency _(integer)_           |
-| `created`       | Time at which the auth was created. Measured in seconds since the Unix epoch _(timestamp)_ |
-| `merchant_id`   | Unique identifier for the merchant _(string)_                                              |
-| `actions`       | See 'actions' below _(nullable array)_                                                     |
-| `details`       | The line items in the purchase _(array)_                                                   |
+## Header Info
 
-## Generic line-items
-
-A generic line item is used when the goods and services being purchased do not match one of the special types below.
+Here's a sample receipt header:
 
 ```json
-{
-  "quantity": 1,
-  "Description": "Kleenex Ultra Soft",
-  "unit_cost": 1432,
-  "tax": 100,
-  "total": 1532
-}
+    "id": "1MzFN1K8F4fqH0lBmFq8CjbU",
+    "currency": USD,
+    "amount": 6332,
+    "subtotal": 5928,
+    "date_time": 1713295619,
+    "merchant": {
+      "id": "merchant_1MzFN1K8F4fqH0lBmFq8CjbU",
+      "name": "Platform Co",
+      "brand_color": "#f0c14b",
+      "logo": "https://cdn.widget.co/image_url.png",
+      "mcc": 234,
+      "website": ""
+    },
+    "third_party": {
+      "first_party_relation": "point_of_sale",
+      "make_primary": true,
+      "merchant": {
+        "id": "merchant_ac48cef2-0d7f-4159-865e-e92b152262bc",
+        "name": "Widget Co.",
+        "brand_color": "#EF4D48",
+        "logo": "/temp_demo_assets/clover/logo-Ramirez.png",
+        "website": "",
+        "mcc": 234
+      }
+    }
 ```
 
-| Field         | Description                                                                                 |
-| ------------- | ------------------------------------------------------------------------------------------- |
-| `quantity `   | The quantity of the item _(integer)_                                                        |
-| `description` | The description of the item — the maximum length of this field is 128 characters _(string)_ |
-| `unit_cost`   | The unit cost of the item _(integer)_                                                       |
-| `tax`         | The tax for this line item _(integer)_                                                      |
-| `total`       | The total for this line item _(integer)_                                                    |
+| Field         | Description                                                                                                                                                                                                                                                  |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`          | Unique identifier for the receipt. _(string)_                                                                                                                                                                                                                |
+| `currency`    | An [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) currency code, e.g. `USD`. _(string)_                                                                                                                                                        |
+| `amount`      | The receipt total amount. This amount is in the receipt currency and in the [smallest currency unit](/definitions#currencies). _(integer)_                                                                                                                   |
+| `subtotal`    | The receipt subtotal (before taxes, fees, and tip). Also in the [smallest currency unit](/definitions#currencies). _(integer)_                                                                                                                               |
+| `date_time`   | Time at which the object was created. Measured in seconds since the Unix epoch. _(integer)_                                                                                                                                                                  |
+| `merchant`    | The [merchant](#merchant-object) facilitating the transaction. _(object)_                                                                                                                                                                                    |
+| `third_party` | A [third party](#third-party-object) involved in the transaction, when applicable. For example, if you purchased Chinese take-out through DoorDash, DoorDash would be the merchant, and the Chinese take-out restaurant would be the third party. _(object)_ |
 
-## Special types of line items
+### Merchant Object
 
-### Flight
+| Field         | Description                                                                                           |
+| ------------- | ----------------------------------------------------------------------------------------------------- |
+| `id`          | Unique identifier for the merchant. _(string)_                                                        |
+| `name`        | Merchant name. _(string)_                                                                             |
+| `brand_color` | A hex color. _(string)_                                                                               |
+| `logo`        | A valid url to a square aspect-ratio logo representing the merchant. Recommmend size 400x400. _(url)_ |
+| `mcc`         | A valid MCC. _(integer)_                                                                              |
+| `website`     | A valid url to the merchant's primary website. _(url)_                                                |
 
-### Car Rental
+### Third Party Object
 
-### Rail
-
-### Lodging
-
-### Ground Transport
-
-e.g. rideshare
-
-### Ecommerce
-
-### Restaurant - full service
-
-### Restaurant - quick service
-
-e.g. coffee shops
-
-### Food delivery
-
-### Subscription
-
-e.g. SaaS, telecom
-
-### Ads
-
-### Energy
-
-e.g. utilities, gas
-
-### Hosting
-
-### Parking
-
-### Tax
-
-## Primitives
-
-### Address
-
-## Actions
+| Field                  | Description                                                                                                                                                                                                                                                             |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `first_party_relation` | One of `bnpl` `delivery_service` `marketplace` `payment_processor` `platform point_of_sale` _(string)_                                                                                                                                                                  |
+| `make_primary`         | Determines whether the merchatn or third party gets top billing on the receipt. E.g. for an Instacart transaction, perhaps 'Instacart' should be primary vs. where the goods came from, but for a Square receipt, perhaps the restaurant should be primary. _(boolean)_ |
+| `merchant`             | A [merchant](#merchant-object) object representing the third party. _(string)_                                                                                                                                                                                          |
